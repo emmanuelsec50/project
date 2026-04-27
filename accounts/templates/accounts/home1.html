@@ -89,9 +89,9 @@
             </div>
 
             <!-- View Profile -->
-            <a href="" class="btn">
+            <a href="{% url 'profile_view' member.user.username %}" class="btn">
                 View Profile
-            </a>
+            </a></a>
 
         </div>
     {% empty %}
