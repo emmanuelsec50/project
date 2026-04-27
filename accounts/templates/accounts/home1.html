@@ -1,0 +1,102 @@
+{% extends 'accounts/base.html' %}
+{% block content%}
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f6f9;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 20px;
+        }
+
+        .card {
+            background: #fff;
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            transition: 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .profile-img {
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 10px;
+            border: 3px solid #4CAF50;
+        }
+
+        .name {
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        .username {
+            color: #777;
+            margin-bottom: 10px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 8px 15px;
+            background: #4CAF50;
+            color: white;
+            border-radius: 6px;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .btn:hover {
+            background: #45a049;
+        }
+    </style>
+
+<body>
+
+<h2>All Users</h2>
+
+<div class="grid">
+    {% for member in members %}
+        <div class="card">
+
+            <!-- Profile Image -->
+            <img src="{{ member.image.url }}"
+                 class="profile-img">
+
+            <!-- Name -->
+            <div class="name">
+                {{ member.first_name }} {{ member.last_name }}
+            </div>
+
+            <!-- Username -->
+            <div class="username">
+                @{{ member.user.username }}
+            </div>
+
+            <!-- View Profile -->
+            <a href="" class="btn">
+                View Profile
+            </a>
+
+        </div>
+    {% empty %}
+        <p>No users found.</p>
+    {% endfor %}
+</div>
+
+{% endblock %}
