@@ -73,7 +73,7 @@
 <div class="grid">
     {% for member in members %}
         <div class="card">
-            <a href="{% url 'chat' member.user.username %}" class="text-decoration-none">
+            <a href="{% url 'profile_view' member.user.username %}" class="text-decoration-none">
             <!-- Profile Image -->
             <img src="{{ member.image.url }}"
                  class="profile-img">

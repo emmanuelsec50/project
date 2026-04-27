@@ -106,7 +106,6 @@ def chat(request, username):
         reciever=request.user,
         is_read=False
     ).update(is_read=True)
-    #perk = reciever.userperk_set.perk.name
     context = {
         'messages': messages, 
         'form': form, 
@@ -114,3 +113,39 @@ def chat(request, username):
         
     }
     return render(request, 'accounts/chat.html', context)
+
+def chat_list(request):
+    user = request.user
+    
+    messages = Messages.objects.filter(Q(sender=user) | Q(reciever=user)).order_by('-timestamp')
+    conversations = {}
+    for message in messages:
+        if message.sender == request.user:
+            other_user = message.reciever
+        else:
+            other_user = message.sender
+    
+        if other_user not in conversations:
+            unread_messages = Messages.objects.filter(
+            sender = other_user,
+            reciever = user,
+            is_read = False
+            ).count()
+            conversations[other_user] = {
+                'message': message,
+                'unread_messages': unread_messages,
+            }
+    
+    return render(request, 'accounts/chat_listing.html', {'conversations': conversations.items()})
+
+def profile_view(request, username):
+    other = get_object_or_404(User, username=username)
+    if request.user == other:
+        return redirect('profile')
+    
+    
+    other_user = other.members
+    context = {
+        'other_user': other_user,    
+    }
+    return render(request, 'accounts/profile_view.html', context)
